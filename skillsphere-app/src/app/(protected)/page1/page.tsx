@@ -7,17 +7,17 @@ import { TopBar } from '@worldcoin/mini-apps-ui-kit-react';
 const categories = [
   {
     name: 'Photography',
-    image: '/photography.png', // Replace with your image path or use a placeholder
+    image: '/photography.png', 
     languages: 'Spanish ↔ English',
   },
   {
     name: 'Coding',
-    image: '/coding.png', // Replace with your image path or use a placeholder
+    image: '/coding.png',
     languages: '',
   },
   {
     name: 'Translation',
-    image: '/translation.png', // Replace with your image path or use a placeholder
+    image: '/translation.png',
     languages: 'Dutch ↔ English',
   },
 ];
