@@ -1,0 +1,124 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "sessionId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "teacher",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "learner",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "skill",
+						"type": "string"
+					}
+				],
+				"name": "SessionCreated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "learner",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "skill",
+						"type": "string"
+					}
+				],
+				"name": "createSession",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "sessions",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "teacher",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "learner",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "skill",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"skillsphere-app/rootstock-contracts/skillsphere.sol": "SkillSharing"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"skillsphere-app/rootstock-contracts/skillsphere.sol": {
+			"keccak256": "0x52f5103b5dbaf59a084b148501e45281c4ab71e683b6addec014864c6b1d1169",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://97099ef7a26a7921d27c6423307820e5d3b93a318bb27e654a6ae185bf367161",
+				"dweb:/ipfs/QmaYF1Mb1FKv4AWKBhkJfC4wDYkmgX9Jzn8ucNzdgeRzVx"
+			]
+		}
+	},
+	"version": 1
+}
