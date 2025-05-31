@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import { Page } from '@/components/PageLayout';
 import { TopBar } from '@worldcoin/mini-apps-ui-kit-react';
+import { useRouter } from 'next/navigation';
 
 const categories = [
   {
     name: 'Photography',
     image: '/photography.png', 
-    languages: 'Spanish ↔ English',
+    languages: 'Take 10 High quality photos of prague' ,
   },
   {
     name: 'Coding',
@@ -24,8 +25,13 @@ const categories = [
 
 export default function Home() {
   const [selected, setSelected] = useState(categories[0].name);
+  const router = useRouter();
 
   const selectedCategory = categories.find(cat => cat.name === selected);
+
+  const handleCategoryClick = () => {
+    router.push('/progress');
+  };
 
   return (
     <Page className="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen">
@@ -54,7 +60,10 @@ export default function Home() {
         </div>
         {/* Selected Category Card */}
         {selectedCategory && (
-          <div className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-8 w-72 border-2 border-indigo-100 hover:shadow-2xl transition-all duration-300">
+          <div 
+            onClick={handleCategoryClick}
+            className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-8 w-72 border-2 border-indigo-100 hover:shadow-2xl transition-all duration-300 cursor-pointer"
+          >
             <div className="w-32 h-32 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl mb-6 flex items-center justify-center p-2">
               <img src={selectedCategory.image} alt={selectedCategory.name} className="w-full h-full object-cover rounded-lg" />
             </div>
