@@ -1,31 +1,18 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Page } from '@/components/PageLayout';
 import { TopBar } from '@worldcoin/mini-apps-ui-kit-react';
 
-const categories = [
-  {
-    name: 'Photography',
-    image: '/photography.png', // Replace with your image path or use a placeholder
-    languages: 'Spanish ↔ English',
-  },
-  {
-    name: 'Coding',
-    image: '/coding.png', // Replace with your image path or use a placeholder
-    languages: '',
-  },
-  {
-    name: 'Translation',
-    image: '/translation.png', // Replace with your image path or use a placeholder
-    languages: 'Dutch ↔ English',
-  },
-];
-
 export default function Home() {
-  const [selected, setSelected] = useState(categories[0].name);
+  const [selected, setSelected] = useState<string | null>(null);
+  const router = useRouter();
 
-  const selectedCategory = categories.find(cat => cat.name === selected);
+  const handleHireClick = () => {
+    setSelected('hire');
+    router.push('/page1');
+  };
 
   return (
     <Page className="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
@@ -35,35 +22,32 @@ export default function Home() {
       <Page.Header>
         <TopBar title="SkillSphere" />
       </Page.Header>
-      <Page.Main className="flex flex-col items-center justify-start min-h-[60vh]">
-        {/* Category Buttons */}
-        <div className="flex gap-4 mb-8">
-          {categories.map((cat) => (
-            <button
-              key={cat.name}
-              onClick={() => setSelected(cat.name)}
-              className={`px-4 py-2 rounded-lg font-semibold shadow transition
-                ${selected === cat.name
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-blue-100 text-blue-800 hover:bg-blue-200'}
-              `}
-            >
-              {cat.name}
-            </button>
-          ))}
+      <Page.Main className="flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col gap-8 w-full max-w-md">
+          <button
+            onClick={handleHireClick}
+            className={`w-full py-10 rounded-2xl text-2xl font-bold shadow-lg transition
+              ${selected === 'hire'
+                ? 'bg-green-700 text-white scale-105'
+                : 'bg-green-500 text-white hover:bg-green-600'}
+            `}
+          >
+            Hire for skills
+          </button>
+          <button
+            onClick={() => setSelected('offer')}
+            className={`w-full py-10 rounded-2xl text-2xl font-bold shadow-lg transition
+              ${selected === 'offer'
+                ? 'bg-green-700 text-white scale-105'
+                : 'bg-green-500 text-white hover:bg-green-600'}
+            `}
+          >
+            Offer skills
+          </button>
         </div>
-        {/* Selected Category Card */}
-        {selectedCategory && (
-          <div className="flex flex-col items-center bg-white rounded-xl shadow-md p-6 w-56">
-            <div className="w-24 h-24 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-              {/* Replace with <img src={selectedCategory.image} ... /> if you have images */}
-              <span className="text-gray-400">image</span>
-            </div>
-            {selectedCategory.languages && (
-              <div className="text-center text-sm text-gray-700 mt-2">
-                {selectedCategory.languages}
-              </div>
-            )}
+        {selected && (
+          <div className="mt-8 text-lg text-blue-700 font-semibold">
+            {selected === 'hire' ? 'You want to hire for skills.' : 'You want to offer your skills.'}
           </div>
         )}
       </Page.Main>
