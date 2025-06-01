@@ -1,33 +1,70 @@
-## Create a Mini App
+# SkillSphere - Freelance Marketplace
 
-[Mini apps](https://docs.worldcoin.org/mini-apps) enable third-party developers to create native-like applications within World App.
+SkillSphere is a decentralized learning platform built as a World App mini application that enables users to learn new skills, earn attestations, and receive merits for completing tasks.
 
-This template is a way for you to quickly get started with authentication and examples of some of the trickier commands.
+## Features
+- Built on World App's authentication system with session management for each tasks the user completes..
 
-## Getting Started
+### Attestation System
+- Integration with Ethereum Attestation Service (EAS)
+- Automatic attestation generation upon task completion
+- Schema-based attestation structure:
+  - `skillSphereCompleted`: Boolean indicating completion
+  - `skillSpheresessionID`: Unique session identifier
 
-1. cp .env.example .env.local
-2. Follow the instructions in the .env.local file
-3. Run `npm run dev`
-4. Run `ngrok http 3000`
-5. Run `npx auth secret` to update the `AUTH_SECRET` in the .env.local file
-6. Add your domain to the `allowedDevOrigins` in the next.config.ts file.
-7. [For Testing] If you're using a proxy like ngrok, you need to update the `AUTH_URL` in the .env.local file to your ngrok url.
-8. Continue to developer.worldcoin.org and make sure your app is connected to the right ngrok url
-9. [Optional] For Verify and Send Transaction to work you need to do some more setup in the dev portal. The steps are outlined in the respective component files.
+### Smart Contract Integration
+- Rootstock blockchain integration
+- EAS contract interaction for attestations
+- Merits distribution through Blockscout API
 
-## Authentication
+## Setup Instructions
 
-This starter kit uses [Minikit's](https://github.com/worldcoin/minikit-js) wallet auth to authenticate users, and [next-auth](https://authjs.dev/getting-started) to manage sessions.
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   ```
+4. Configure the following in `.env.local`:
+   - `NEXT_PUBLIC_PRIVATE_KEY`: Your private key for blockchain interactions
+   - `API_KEY`: Your Blockscout API key
+   - Other required environment variables
 
-## UI Library
+5. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-This starter kit uses [Mini Apps UI Kit](https://github.com/worldcoin/mini-apps-ui-kit) to style the app. We recommend using the UI kit to make sure you are compliant with [World App's design system](https://docs.world.org/mini-apps/design/app-guidelines).
+6. For local testing:
+   ```bash
+   ngrok http 3000
+   ```
 
-## Eruda
+## Task Flow
 
-[Eruda](https://github.com/liriliri/eruda) is a tool that allows you to inspect the console while building as a mini app. You should disable this in production.
+1. User selects a category from the main page
+2. Task progress is tracked with a visual progress bar
+3. Upon completion:
+   - Generates attestation for the session
+   - Distributes merits to participants
+   - Returns to main page
+
+## Dependencies
+
+- Next.js
+- React
+- ethers.js
+- @ethereum-attestation-service/eas-sdk
+- @worldcoin/mini-apps-ui-kit-react
+- TailwindCSS
 
 ## Contributing
 
-This template was made with help from the amazing [supercorp-ai](https://github.com/supercorp-ai) team.
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

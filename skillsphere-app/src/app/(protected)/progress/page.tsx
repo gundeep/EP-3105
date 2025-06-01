@@ -36,7 +36,7 @@ export default function ProgressPage() {
     try {
       // Step 1: Show attestation status
       setCurrentStep('attestation');
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       // Setup EAS
       const provider = new ethers.JsonRpcProvider("https://rpc.testnet.rootstock.io/API-KEY");
@@ -69,7 +69,7 @@ export default function ProgressPage() {
 
       // Step 2: Show merits distribution status
       setCurrentStep('merits');
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
       // After attestation, distribute merits
       const meritAmount = 10;
