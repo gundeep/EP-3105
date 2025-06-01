@@ -5,12 +5,18 @@ import { Page } from '@/components/PageLayout';
 import { TopBar } from '@worldcoin/mini-apps-ui-kit-react';
 import { useRouter } from 'next/navigation';
 import { ethers } from 'ethers';
+import { useReadContract, useWriteContract, useAccount } from 'wagmi';
 
 export default function ProgressPage() {
   const router = useRouter();
+  const { address } = useAccount();
+  const { writeContract } = useWriteContract();
+  const contractAddress = '0x0000000000000000000000000000000000000000';
+  const contractABI = []; // TODO: Add your contract ABI here
   const [progress, setProgress] = useState(0);
   const [isCompleting, setIsCompleting] = useState(false);
   const [error, setError] = useState('');
+  const [sessions, setSessions] = useState<any[]>([]);
 
   // Simulate progress
   useEffect(() => {
@@ -28,8 +34,8 @@ export default function ProgressPage() {
   }, []);
 
   const completeSession = async () => {
-    if (!contract || !signer) {
-      setError('Contract or signer not available');
+    if (!address) {
+      setError('Wallet not connected');
       return;
     }
 
@@ -37,55 +43,37 @@ export default function ProgressPage() {
     setError('');
 
     try {
-      const sessionIndex = 0; // You'll need to pass this from the previous page
+      const sessionIndex = 0;
       const session = sessions[sessionIndex];
       
-      // Generate data hash for attestation
-      const data = ethers.utils.keccak256(
-        ethers.utils.defaultAbiCoder.encode(
+      const data = ethers.keccak256(
+        ethers.AbiCoder.defaultAbiCoder().encode(
           ['uint256', 'address', 'address', 'string'],
           [sessionIndex, session.teacher, session.learner, session.skill]
         )
       );
 
-      const tx = await contract.completeSession(sessionIndex, data);
-      const receipt = await tx.wait();
-      
-      // Extract attestationId from event logs
-      const event = receipt.events.find(e => e.event === 'SessionCompleted');
-      const attestationId = event.args.attestationId;
-
-      // Distribute Merits to teacher and learner
-      const meritAmount = 10; // Example: 10 Merits each
-      const distributions = [
-        { address: session.teacher, amount: meritAmount },
-        { address: session.learner, amount: meritAmount }
-      ];
-
-      const response = await fetch('https://merits.blockscout.com/api/v1/merits/distribute', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_API_KEY' // Replace with your actual API key
-        },
-        body: JSON.stringify({ distributions })
+      const hash = await writeContract({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: 'completeSession',
+        args: [sessionIndex, data]
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to distribute Merits: ' + await response.text());
+      if (!hash) {
+        throw new Error('Transaction failed');
       }
 
       // Update session state
       const updatedSessions = [...sessions];
       updatedSessions[sessionIndex].completed = true;
-      updatedSessions[sessionIndex].attestationId = attestationId.toString();
       setSessions(updatedSessions);
 
       // Navigate back to main page after successful completion
       router.push('/page1');
-    } catch (error) {
-      console.error('Error completing session:', error);
-      setError(error.message || 'Failed to complete session');
+    } catch (err: any) {
+      console.error('Error completing session:', err);
+      setError(err.message || 'Failed to complete session');
     } finally {
       setIsCompleting(false);
     }
